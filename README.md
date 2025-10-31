@@ -1,12 +1,29 @@
-# Submit to PatchEval Leaderboard
+# PatchEval: A New Benchmark for Evaluating LLMs on Patching Real-World Vulnerabilitie
 
-If you are interested in submitting your method (model/agent) and results to the [PatchEval](https://patcheval.github.io/) leaderboard, please follow these steps:
+<p align="left">
+  <a href="https://arxiv.org/pdf/xxx">
+    <img src="https://img.shields.io/badge/Tech Report-arXiv-green">
+  </a>
+  <a href="https://huggingface.co/datasets/xxx">
+    <img src="https://img.shields.io/badge/Dataset-HuggingFace-orange">
+  </a>
+  <a href="https://www.python.org/">
+    <img alt="Python" src="https://img.shields.io/badge/Python-3.10+-1f425f.svg?color=purple">
+  </a>
+  <a href="/LICENSE">
+    <img alt="License" src="https://img.shields.io/badge/License-Apache 2.0-yellow">
+  </a>
+</p>
 
-1. Fork and clone the [PatchEval repository](https://github.com/bytedance/PatchEval). Set up the evaluation environment as described in the [README.md](https://github.com/PatchEval/experiments/blob/main/README.md) file.
+## Submit to PatchEval Leaderboard
 
-2. Within the repository, you can evaluate your own data using the provided script (e.g., `patcheval/evaluation/run_evaluation.py`).
+If you would like to submit your model results to [PatchEval](https://patcheval.github.io/) leaderboard, please follow the steps below.
 
-    a. Prepare your patch data in the following format:
+1. Setup: Fork and clone the [PatchEval repository](https://github.com/bytedance/PatchEval). Set up the evaluation environment as described in the repository’s [README.md](https://github.com/bytedance/PatchEval/blob/main/README.md).
+
+2. Run evaluation: You can evaluate your own results using the provided script (e.g., `patcheval/evaluation/run_evaluation.py`).
+
+    a. Prepare your patch file:
 
     ```json
     [
@@ -26,23 +43,36 @@ If you are interested in submitting your method (model/agent) and results to the
         --patch_file YOUR_PATCH_PATH \
     ```
 
-3. In your submission folder, please include the following files:
+3. Submission: Your submission directory should contain the following files and structure:
 
-    - `summary.json`: Evaluation results for all cases
-    - `run_evaluation.log`: Log of the evaluation process
-    - `your_patch.json`: Must contain at least the `cve` and `fix_patch` keys
-    - `logs/`: PatchEval evaluation artifacts, containing the `patch` and `log` results for each CVE. The folder structure should be as follows:
+    - `summary.json`: Evaluation results
+    - `run_evaluation.log`: Evaluation logs
+    - `your_patch.json`: Must include 'cve' and 'fix_patch' keys
+    - `logs/`: Evaluation artifacts for each CVE. The folder structure should be as follows:
 
-    ```bash
-    logs
-    ├── CVE-ID
-    │   ├── fix.patch
-    │   └── success_output.log
-    └── CVE-ID
-        ├── error_output.log
-        └── fix.patch
-    ```
+        ```bash
+        logs
+        ├── CVE-ID
+        │   ├── fix.patch
+        │   └── success_output.log
+        └── CVE-ID
+            ├── error_output.log
+            └── fix.patch
+        ```
 
-    - `trajs/`: (Optional) Reasoning traces showing how your agent solved each problem
+    - `metadata.yaml`: Metadata of your submission, including how it will be displayed on the website:
+        - name: The name of your leaderboard entry
+        - site: URL/link to more information about your system
+        - verified: false (See below for results verification)
+    - `trajs/`: (Optional) Traces that show how your agent repair each CVE
 
-4. Create a pull request to the `patcheval/experiments` [repository](https://github.com/patcheval/experiments) with your new folder.
+4. Create a pull request to the [repository](https://github.com/PatchEval/experiments) with a new folder.
+
+## Verify Your Results
+
+A Verified ✅ badge on the leaderboard indicates that the PatchEval team has independently reproduced your patch generation results.
+To request verification for your submission, please follow these steps:
+
+1. Open an Issue: Create a new issue in [GitHub repository](https://github.com/PatchEval/experiments) to request verification.
+2. Provide Instructions: In the issue, include detailed, step-by-step instructions for running your model on the PatchEval benchmark.
+3. Await Confirmation: Once the team successfully reproduces your results, your submission will receive the “Verified” checkmark on the leaderboard.
